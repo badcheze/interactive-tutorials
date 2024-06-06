@@ -3,7 +3,7 @@ DB_HOST = "direct.learnpython.org"
 SECRET_KEY = "this is a secret. really."
 
 LEARNPYTHON_DOMAIN = "learnpython.org"
-LEARNJAVA_DOMAIN = "learnjavaonline.org"
+LEARNJAVA_DOMAIN = "google.com"
 LEARNC_DOMAIN = "learn-c.org"
 LEARNCPP_DOMAIN = "learn-cpp.org"
 LEARNJS_DOMAIN = "learn-js.org"
