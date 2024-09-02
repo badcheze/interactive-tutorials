@@ -137,13 +137,16 @@ def untab(text):
 
 
 def init_tutorials():
-    contributing_tutorials = wikify(open(os.path.join(os.path.dirname(__file__), "tutorials", "Contributing Tutorials.md")).read(), "en")
+    # contributing_tutorials = wikify(open(os.path.join(os.path.dirname(__file__), "tutorials", "Contributing Tutorials.md")).read(), "en")
 
     for domain in os.listdir(os.path.join(os.path.dirname(__file__), "tutorials")):
+        if not domain == "learnpython.org":
+            continue
+
         if domain.endswith(".md"):
             continue
 
-        logging.info("loading data for domain: %s", domain)
+        print("loading data for domain: %s", domain)
         tutorial_data[domain] = {}
         if not os.path.isdir(os.path.join(os.path.dirname(__file__), "tutorials", domain)):
             continue
@@ -206,7 +209,7 @@ def init_tutorials():
                     if not link in tutorial_data[domain][language]:
                         tutorial_data[domain][language][link] = {
                             "page_title" : link,
-                            "text": contributing_tutorials,
+                            "text": "text",
                             "code": ""
                         }
 
@@ -306,11 +309,27 @@ def favicon():
 def ads():
     return Response(render_template("ads.txt"), mimetype='text/plain')
 
+# @app.route("/book-list")
+# def book_list_page():
+#     return Response(render_template("book-list.html"), mimetype='text/plain')
+
+
+# Makes book page first page that loads at route "/"
+# @app.route("/", methods=["GET", "POST"])
+# def default_page():
+#     return make_response(render_template(
+#         "book-list.html",
+#         domain_data=get_domain_data(),
+#         all_data=constants.DOMAIN_DATA,
+#         domain_data_json=json.dumps(get_domain_data()),
+#         language_code="en",
+#     ))
 
 @app.route("/", methods=["GET", "POST"])
+@app.route("/python")
 @app.route("/<language>/", methods=["GET", "POST"])
 def default_index(language="en"):
-    return index("Welcome", language)
+    return index("Books", language)
 
 @app.route("/about")
 @app.route("/privacy")
@@ -385,11 +404,19 @@ def index(title, language="en"):
 
         uid = session["uid"]
 
+        print("host: " + get_host())
+        print("language: " + language)
+
+        print("TUTORIAL DATA")
+        print(tutorial_data[get_host()][language]["Welcome"])
+
         try:
             site_links = tutorial_data[get_host()][language]["Welcome"]["links"]
+            js_links = tutorial_data["learn-js.org"][language]["Welcome"]["links"]
+            print("SITE LINKSSS: " + js_links)
         except Exception as e:
             site_links = []
-            logging.error("cant get site links for %s %s" % (get_host(), language))
+            print("cant get site links for %s %s" % (get_host(), language))
 
         print(request.host)
 
