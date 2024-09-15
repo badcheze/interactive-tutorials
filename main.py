@@ -329,7 +329,7 @@ def ads():
 @app.route("/python")
 @app.route("/<language>/", methods=["GET", "POST"])
 def default_index(language="en"):
-    return index("Books", language)
+    return index("Welcome", language)
 
 @app.route("/about")
 @app.route("/privacy")

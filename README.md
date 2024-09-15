@@ -46,7 +46,7 @@ To run the development server outside of a Docker, run the following command onc
 
 And then run:
 
-    DEFAULT_DOMAIN=learn-js.org make run-local
+    DEFAULT_DOMAIN=learnpython.org make run-local
     
 
 ### IDEOne Credentials
